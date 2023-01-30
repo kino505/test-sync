@@ -10,7 +10,9 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.kino505 }} 
-          known_hosts: 'github'
+          known_hosts: 'prod-parsers.shopfans.io'
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H prod-parsers.shopfans.io >> ~/.ssh/known_hosts
       - name: Deploy with rsync
         run: rsync -avz ./dags/ ${{ secrets.ec2-user }}@prod-parsers.shopfans.io:/tmp/dags/
       - name: executing remote ssh commands
