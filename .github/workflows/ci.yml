@@ -23,15 +23,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy with rsync
         run: rsync -avz ./dags/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/dags/
-      - name: executing remote ssh commands
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: "52.204.47.83"
-          username: "ec2-user"
-          password: "qwerty!!11"
-          port: "22"
-          script: |
-            mkdir -p /tmp/dags
-            cd /tmp/dags
-            rsync -rtvz ec2-user@52.204.47.83:/tmp/dags/ .
-          
+      
