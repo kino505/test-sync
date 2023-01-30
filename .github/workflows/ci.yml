@@ -1,0 +1,20 @@
+name: SSh to my host
+on: [push]
+jobs:
+
+  build:
+    name: SSH to host
+    runs-on: centos-latest
+    steps:
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: "52.204.47.83"
+          username: "ec2-user"
+          password: "qwerty!!11"
+          port: "22"
+          script: |
+            mkdir -p /tmp/dags
+            cd /tmp/dags
+            rsync -rtvz ec2-user@52.204.47.83:/tmp/ .
+          
