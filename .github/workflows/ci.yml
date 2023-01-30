@@ -10,11 +10,11 @@ jobs:
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.kino505 }} 
-          known_hosts: 'prod-parsers.shopfans.io'
+          
       - name: Adding Known Hosts
-        run: ssh-keyscan -H prod-parsers.shopfans.io >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy with rsync
-        run: rsync -avz ./dags/ ${{ secrets.SSH_USER }}@{{ secrets.SSH_HOST }}:/tmp/dags/
+        run: rsync -avz ./dags/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/dags/
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v0.1.7
         with:
