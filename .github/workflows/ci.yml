@@ -6,6 +6,13 @@ jobs:
     name: SSH to host
     runs-on: centos-latest
     steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.kino505 }} 
+          known_hosts: 'github'
+      - name: Deploy with rsync
+        run: rsync -avz ./dags/ ${{ secrets.ec2-user }}@${{ secrets.prod-parsers.shopfans.io }}:/tmp/dags/
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -16,5 +23,5 @@ jobs:
           script: |
             mkdir -p /tmp/dags
             cd /tmp/dags
-            rsync -rtvz ec2-user@52.204.47.83:/tmp/ .
+            rsync -rtvz ec2-user@52.204.47.83:/tmp/dags/ .
           
