@@ -14,7 +14,7 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H prod-parsers.shopfans.io >> ~/.ssh/known_hosts
       - name: Deploy with rsync
-        run: rsync -avz ./dags/ ec2-user@prod-parsers.shopfans.io:/tmp/dags/
+        run: rsync -avz ./dags/ ${{ secrets.SSH_USER }}@{{ secrets.SSH_HOST }}:/tmp/dags/
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v0.1.7
         with:
